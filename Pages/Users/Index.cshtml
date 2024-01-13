@@ -22,9 +22,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.AspUserShow[0].Email)
                 </th>
-@*                 <th>
-                    @Html.DisplayNameFor(model => model.AspUserShow[0].Id)
-                </th> *@
+                <th>
+                    @Html.DisplayNameFor(model => model.AspUserShow[0].RoleName)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -38,12 +38,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-@*                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td> *@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
-                        @* <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> | *@
                         <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
                     </td>
                 </tr>
@@ -55,7 +54,3 @@ else
 {
     <span>NOT Logged In</span>
 }
-
-
-
-

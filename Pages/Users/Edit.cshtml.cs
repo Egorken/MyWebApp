@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using MyWebApp.Data.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MyWebApp.Pages.Users
 {
-    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly UserManager<ApplicationIdentityUser> _userManager;
@@ -35,6 +33,9 @@ namespace MyWebApp.Pages.Users
 
         public SelectList RolesList { get; set; }
 
+        [BindProperty]
+        public string RoleName { get; set; }
+
         public async Task OnGetAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -45,17 +46,13 @@ namespace MyWebApp.Pages.Users
                 Email = user.Email;
                 Id = user.Id;
 
-                // Получить список всех ролей
                 var roles = await _roleManager.Roles.ToListAsync();
-
-                // Инициализировать список ролей для dropdown
                 RolesList = new SelectList(roles, nameof(IdentityRole.Name), nameof(IdentityRole.Name));
 
-                // Получить список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
-
-                // Установить выбранные роли пользователя
                 SelectedRoles = userRoles.ToList();
+
+                RoleName = userRoles.FirstOrDefault();
             }
             else
             {
@@ -81,7 +78,6 @@ namespace MyWebApp.Pages.Users
 
                 if (result.Succeeded)
                 {
-                    // Установить роли пользователя
                     var userRoles = await _userManager.GetRolesAsync(user);
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, SelectedRoles);

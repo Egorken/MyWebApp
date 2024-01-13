@@ -13,10 +13,12 @@ namespace MyWebApp.Pages.Users
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationIdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(UserManager<ApplicationIdentityUser> userManager)
+        public IndexModel(UserManager<ApplicationIdentityUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         public IList<AspUserShow> AspUserShow { get; set; } = new List<AspUserShow>();
@@ -24,12 +26,24 @@ namespace MyWebApp.Pages.Users
         public async Task OnGetAsync()
         {
             AspUserShow = await _userManager.Users
-                .Select(u => new AspUserShow
-                {
-                    Id = u.Id,
-                    UserName = u.UserName,
-                    Email = u.Email,
-                })
+                .Join(
+                    _context.UserRoles,
+                    u => u.Id,
+                    ur => ur.UserId,
+                    (user, userRole) => new { User = user, UserRole = userRole }
+                )
+                .Join(
+                    _context.Roles,
+                    ur => ur.UserRole.RoleId,
+                    role => role.Id,
+                    (ur, role) => new AspUserShow
+                    {
+                        Id = ur.User.Id,
+                        UserName = ur.User.UserName,
+                        Email = ur.User.Email,
+                        RoleName = role.Name
+                    }
+                )
                 .ToListAsync();
         }
     }
