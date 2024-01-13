@@ -162,16 +162,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/Edit.cshtml]
@@ -180,6 +172,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/Users/UserRolesModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVXNlclJvbGVzTW9kZWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/George/source/repos/MyWebApp/MyWebApp/Pages/_ViewImports.cshtml]

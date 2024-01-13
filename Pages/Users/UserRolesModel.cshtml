@@ -1,0 +1,17 @@
+﻿@page
+@model MyWebApp.Pages.Users.UserRolesModel
+@{
+}
+
+<form method="post">
+    <div class="form-group">
+        <label for="userRole">Выберите роль:</label>
+        <select asp-for="UserRoleViewModel.SelectedRole" class="form-control" id="userRole">
+            @foreach (var role in Model.UserRoleViewModel.AvailableRoles)
+            {
+                <option value="@role">@role</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

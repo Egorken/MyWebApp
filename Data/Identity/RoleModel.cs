@@ -1,8 +1,8 @@
-﻿namespace MyWebApp.Data.Identity
-{
-    public class RoleModel
+﻿//namespace MyWebApp.Data.Identity
+//{
+//    public class RoleModel
 
-    {
-        public string RoleName { get; set; }
-    }
-}
+//    {
+//        public string RoleName { get; set; }
+//    }
+//}

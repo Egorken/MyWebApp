@@ -21,40 +21,41 @@ namespace MyWebApp.Pages.Users
         [BindProperty]
         public AspUserShow AspUserShow { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty]
+        public ApplicationIdentityUser ApplicationUser { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            // Преобразуйте id в строку
-            var aspusershow = await _context.AspUserShow.FirstOrDefaultAsync(m => m.Id.ToString() == id.ToString());
+            var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (aspusershow == null)
+            if (user == null)
             {
                 return NotFound();
             }
             else
             {
-                AspUserShow = aspusershow;
+                ApplicationUser = user;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            // Преобразуйте id в строку
-            var aspusershow = await _context.AspUserShow.FindAsync(id.ToString());
-            if (aspusershow != null)
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
             {
-                AspUserShow = aspusershow;
-                _context.AspUserShow.Remove(AspUserShow);
+                ApplicationUser = user;
+                _context.Users.Remove(ApplicationUser);
                 await _context.SaveChangesAsync();
             }
 
