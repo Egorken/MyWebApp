@@ -1,0 +1,68 @@
+﻿@page
+@model MyWebApp.Pages.GamesCatalog.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using MyWebApp.Data.Identity
+@inject SignInManager<ApplicationIdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Каталог игр";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Каталог игр</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-page="Create">Добавить новую</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games[0].NameOfTheGame)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games[0].QuantityAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games[0].Avalible)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Games)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameOfTheGame)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantityAvailable)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Avalible)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>NOT Logged In</span>
+}
+
+
