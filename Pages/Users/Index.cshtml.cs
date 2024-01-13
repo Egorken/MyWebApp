@@ -26,6 +26,7 @@ namespace MyWebApp.Pages.Users
             AspUserShow = await _userManager.Users
                 .Select(u => new AspUserShow
                 {
+                    Id = u.Id,
                     UserName = u.UserName,
                     Email = u.Email,
                 })
@@ -33,3 +34,4 @@ namespace MyWebApp.Pages.Users
         }
     }
 }
+

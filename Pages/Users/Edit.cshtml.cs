@@ -1,45 +1,44 @@
-п»їusing System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using MyWebApp.Data.Identity;
 
 namespace MyWebApp.Pages.Users
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(UserManager<ApplicationIdentityUser> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
-        public AspUserShow AspUserShow { get; set; } = default!;
+        public string UserName { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty]
+        public string Email { get; set; }
+
+        [BindProperty]
+        public string Id { get; set; }
+
+        public async Task OnGetAsync(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
-            var aspusershow =  await _context.AspUserShow.FirstOrDefaultAsync(m => m.UserId == id);
-            if (aspusershow == null)
+            if (user != null)
             {
-                return NotFound();
+                UserName = user.UserName;
+                Email = user.Email;
+                Id = user.Id;
             }
-            AspUserShow = aspusershow;
-            return Page();
+            else
+            {
+                // Обработка ошибки, если пользователя не удалось найти
+            }
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,30 +46,30 @@ namespace MyWebApp.Pages.Users
                 return Page();
             }
 
-            _context.Attach(AspUserShow).State = EntityState.Modified;
+            var user = await _userManager.FindByIdAsync(Id.ToString());
 
-            try
+            if (user != null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AspUserShowExists(AspUserShow.UserId))
+                user.UserName = UserName;
+                user.Email = Email;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
                 {
-                    return NotFound();
+                    return RedirectToPage("./Index");
                 }
                 else
                 {
-                    throw;
+                    // Обработка ошибки при обновлении пользователя
                 }
             }
+            else
+            {
+                // Обработка ошибки, если пользователя не удалось найти
+            }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool AspUserShowExists(int id)
-        {
-            return _context.AspUserShow.Any(e => e.UserId == id);
+            return Page();
         }
     }
 }

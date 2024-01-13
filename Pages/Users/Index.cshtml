@@ -1,44 +1,64 @@
 ﻿@page
 @model MyWebApp.Pages.Users.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using MyWebApp.Data.Identity
+@inject SignInManager<ApplicationIdentityUser> SignInManager
 
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = @"Список пользователей";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Users</h1>
+<h1>Список пользователей</h1>
 
-
-
-<p>
-    <a asp-page="Create">Добавить новую</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                User Name
-            </th>
-            <th>
-                Email
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.AspUserShow)
-        {
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-page="Create">Добавить новую</a>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @user.UserName
-                </td>
-                <td>
-                    @user.Email
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@user.UserId">Отредактировать</a> |
-                    <a asp-page="./Details" asp-route-id="@user.UserId">Детали</a> |
-                    <a asp-page="./Delete" asp-route-id="@user.UserId">Удалить</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.AspUserShow[0].UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AspUserShow[0].Email)
+                </th>
+@*                 <th>
+                    @Html.DisplayNameFor(model => model.AspUserShow[0].Id)
+                </th> *@
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AspUserShow)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+@*                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td> *@
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>NOT Logged In</span>
+}
+
+
+
+

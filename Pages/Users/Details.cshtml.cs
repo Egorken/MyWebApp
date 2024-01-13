@@ -27,7 +27,8 @@ namespace MyWebApp.Pages.Users
                 return NotFound();
             }
 
-            var aspusershow = await _context.AspUserShow.FirstOrDefaultAsync(m => m.UserId == id);
+            // Преобразуйте id в строку
+            var aspusershow = await _context.AspUserShow.FirstOrDefaultAsync(m => m.Id.ToString() == id.ToString());
             if (aspusershow == null)
             {
                 return NotFound();
