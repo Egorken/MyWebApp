@@ -293,3 +293,4 @@ C:\Users\George\source\repos\MyWebApp\MyWebApp\bin\Debug\net8.0\Microsoft.Extens
 C:\Users\George\source\repos\MyWebApp\MyWebApp\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\George\source\repos\MyWebApp\MyWebApp\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\George\source\repos\MyWebApp\MyWebApp\bin\Debug\net8.0\Microsoft.JSInterop.dll
+C:\Users\George\source\repos\MyWebApp\MyWebApp\obj\Debug\net8.0\MyWebApp.sourcelink.json

@@ -81,26 +81,6 @@ using (var scope = app.Services.CreateScope())
 
         await userManager.AddToRoleAsync(user, "Admin");
     }
-
-    app.MapGet("/users", () =>
-    {
-        using var scope = app.Services.CreateScope();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationIdentityUser>>();
-
-        var users = userManager.Users.Select(u => new
-        {
-            UserName = u.UserName,
-            Email = u.Email,
-        }).ToList();
-
-        var result = new StringBuilder();
-        foreach (var user in users)
-        {
-            result.AppendLine($"UserName: {user.UserName}, Email: {user.Email}");
-        }
-
-        return result.ToString();
-    });
 }
 
 app.Run();

@@ -1,29 +1,28 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using MyWebApp.Data.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿//using System.Collections.Generic;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
+//using MyWebApp.Data.Identity;
 
-public class UsersController : Controller
-{
-    private readonly UserManager<AspUserShow> _userManager;
 
-    public UsersController(UserManager<AspUserShow> userManager)
-    {
-        _userManager = userManager;
-    }
+//public class UsersController : Controller
+//{
+//    private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-    public async Task<IActionResult> Index()
-    {
-        var users = await GetUsersAsync();
-        return View(users);
-    }
+//    public UsersController(UserManager<ApplicationIdentityUser> userManager)
+//    {
+//        _userManager = userManager;
+//    }
 
-    private async Task<List<AspUserShow>> GetUsersAsync()
-    {
-        return await _userManager.Users.Select(u => new AspUserShow
-        {
-            UserName = u.UserName,
-            Email = u.Email,
-        }).ToListAsync();
-    }
-}
+//    public async Task<IActionResult> Index()
+//    {
+//        var users = await _userManager.Users.Select(u => new AspUserShow
+//        {
+//            UserName = u.UserName,
+//            Email = u.Email,
+//        }).ToListAsync();
+
+//        return View(users);
+//    }
+//}

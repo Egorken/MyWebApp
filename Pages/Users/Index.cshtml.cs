@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyWebApp.Data.Identity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyWebApp.Pages.Users
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(UserManager<ApplicationIdentityUser> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
         public IList<AspUserShow> AspUserShow { get; set; } = new List<AspUserShow>();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
-            try
-            {
-                AspUserShow = await _context.AspUserShow.ToListAsync();
-                return Page();
-            }
-            catch (Exception ex)
-            {
-                // Обработка ошибок (вывод в лог, отображение пользователю и т. д.)
-                ModelState.AddModelError(string.Empty, "An error occurred while retrieving user data.");
-                return Page();
-            }
+            AspUserShow = await _userManager.Users
+                .Select(u => new AspUserShow
+                {
+                    UserName = u.UserName,
+                    Email = u.Email,
+                })
+                .ToListAsync();
         }
     }
 }

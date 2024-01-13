@@ -1,51 +1,44 @@
 ﻿@page
 @model MyWebApp.Pages.Users.IndexModel
-@using MyWebApp.Data.Identity
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Users";
 }
 
-<h1>Index</h1>
+<h1>Users</h1>
+
+
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Добавить новую</a>
 </p>
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AspUserShow.Any() ? model.AspUserShow.First().UserName : "")
+                User Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AspUserShow.Any() ? model.AspUserShow.First().Email : "")
+                Email
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.AspUserShow)
+        @foreach (var user in Model.AspUserShow)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    @user.UserName
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @user.Email
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.UserId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.UserId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@user.UserId">Отредактировать</a> |
+                    <a asp-page="./Details" asp-route-id="@user.UserId">Детали</a> |
+                    <a asp-page="./Delete" asp-route-id="@user.UserId">Удалить</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-
-@await Model.OnGetAsync()
