@@ -86,6 +86,7 @@ namespace MyWebApp.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -96,6 +97,9 @@ namespace MyWebApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // Добавление роли "Client"
+                    await _userManager.AddToRoleAsync(user, "Client");
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

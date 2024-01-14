@@ -82,6 +82,9 @@ namespace MyWebApp.Pages.Users
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, SelectedRoles);
 
+                    // Set RoleName before redirection
+                    RoleName = SelectedRoles.FirstOrDefault();
+
                     return RedirectToPage("./Index");
                 }
                 else

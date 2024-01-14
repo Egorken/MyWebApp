@@ -1,8 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +10,10 @@ namespace MyWebApp.Areas.Identity.Pages.Account.Manage
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationIdentityUser> _userManager;
-        private readonly SignInManager<ApplicationIdentityUser> _signInManager;
 
-        public IndexModel(
-            UserManager<ApplicationIdentityUser> userManager,
-            SignInManager<ApplicationIdentityUser> signInManager)
+        public IndexModel(UserManager<ApplicationIdentityUser> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         [TempData]
@@ -32,23 +24,22 @@ namespace MyWebApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone Number")]
-            public string PhoneNumber { get; set; }
 
             [Required]
             [Display(Name = "Name")]
             public string Name { get; set; }
+
+            public string RoleName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationIdentityUser user)
         {
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var roleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
-                Name = user.UserName
+                Name = user.UserName,
+                RoleName = roleName
             };
         }
 
@@ -78,22 +69,10 @@ namespace MyWebApp.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var name = user.UserName;
 
-            if (Input.PhoneNumber != phoneNumber || Input.Name != name)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                var setNameResult = await _userManager.SetUserNameAsync(user, Input.Name);
 
-                if (!setPhoneResult.Succeeded || !setNameResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to update profile.";
-                    return RedirectToPage();
-                }
-            }
-
-            await _signInManager.RefreshSignInAsync(user);
+            await LoadAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
