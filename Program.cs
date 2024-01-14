@@ -1,16 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using MyWebApp.Data;
 using MyWebApp.Data.Identity;
-using MyWebApp.Services.Email;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
-using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +15,7 @@ builder.Services.AddDefaultIdentity<ApplicationIdentityUser>(options => options.
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 builder.Services.AddRazorPages();
 
