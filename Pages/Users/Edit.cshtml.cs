@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using MyWebApp.Data.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyWebApp.Pages.Users
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly UserManager<ApplicationIdentityUser> _userManager;
@@ -54,10 +56,7 @@ namespace MyWebApp.Pages.Users
 
                 RoleName = userRoles.FirstOrDefault();
             }
-            else
-            {
-                // Обработка ошибки, если пользователя не удалось найти
-            }
+
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -82,19 +81,10 @@ namespace MyWebApp.Pages.Users
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, SelectedRoles);
 
-                    // Set RoleName before redirection
                     RoleName = SelectedRoles.FirstOrDefault();
 
                     return RedirectToPage("./Index");
                 }
-                else
-                {
-                    // Обработка ошибки при обновлении пользователя
-                }
-            }
-            else
-            {
-                // Обработка ошибки, если пользователя не удалось найти
             }
 
             return Page();

@@ -11,6 +11,6 @@ namespace MyWebApp.Data.Identity
         public string UserName { get; set; }
         public string Email { get; set; }
 
-        public string RoleName { get; set; } // New property for role name
+        public string RoleName { get; set; } 
     }
 }

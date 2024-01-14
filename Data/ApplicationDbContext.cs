@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyWebApp.Data.Identity;
+using System;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationIdentityUser, IdentityRole, string>
 {
@@ -10,12 +11,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationIdentityUser, I
     {
     }
 
+    public DbSet<Games> Games { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
         builder.Entity<Games>().Property(z => z.Id).UseIdentityColumn();
         builder.Entity<Games>().Property(z => z.NameOfTheGame).HasMaxLength(50);
+        builder.Entity<Games>().Property(z => z.Price).HasColumnType("decimal(18, 2)");
         builder.Entity<Games>().HasData(
             new Games
             {
@@ -24,9 +28,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationIdentityUser, I
                 Price = 6990.90m,
             });
     }
-
-    public DbSet<Games> Games { get; set; }
-
-    public DbSet<MyWebApp.Data.Identity.AspUserShow> AspUserShow { get; set; } = default!;
-
 }

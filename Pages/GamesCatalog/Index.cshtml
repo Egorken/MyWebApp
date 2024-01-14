@@ -13,9 +13,12 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <p>
-        <a asp-page="Create">Добавить новую</a>
-    </p>
+    @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+    {
+        <p>
+            <a asp-page="Create">Добавить новую</a>
+        </p>
+    }
     <table class="table">
         <thead>
             <tr>
@@ -50,11 +53,24 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Avalible)
                     </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
-                        <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
-                    </td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                    {
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                        </td>
+                    }
+
+                    @if (User.IsInRole("Client") && item.Avalible)
+                    {
+                        <td>
+                            <form method="post" asp-page-handler="AddToCart">
+                                <input type="hidden" name="gameId" value="@item.Id" />
+                                <button type="submit">Купить</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -64,5 +80,3 @@ else
 {
     <span>NOT Logged In</span>
 }
-
-

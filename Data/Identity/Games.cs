@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyWebApp.Data.Identity
 {
@@ -8,11 +9,13 @@ namespace MyWebApp.Data.Identity
         public int Id { get; set; }
         
         public string NameOfTheGame { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
         public int QuantityAvailable { get; set; } //количество в наличии
 
         public bool Avalible { get; set; }
-
-
     }
+
 }
+
