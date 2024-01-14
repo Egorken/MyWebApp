@@ -16,7 +16,7 @@
     @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
     {
         <p>
-            <a asp-page="Create">Добавить новую</a>
+            <a id="color-link" asp-page="Create">Добавить новую игру</a>
         </p>
     }
     <table class="table">
@@ -56,9 +56,9 @@
                     @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
                     {
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
-                            <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                            <a id="color-link" asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
+                            <a id="color-link" asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                            <a id="color-link" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
                         </td>
                     }
 

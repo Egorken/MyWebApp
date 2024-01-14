@@ -42,8 +42,8 @@
                         @Html.DisplayFor(modelItem => item.RoleName)
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                        <a id="color-link" asp-page="./Edit" asp-route-id="@item.Id">Отредактировать</a> |
+                        <a id="color-link" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
                     </td>
                 </tr>
             }

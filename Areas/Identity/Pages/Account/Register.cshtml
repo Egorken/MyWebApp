@@ -8,7 +8,7 @@
     <div class="col-md-4">
         <section>
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <h2>Новый пользователь</h2>
+                <h2>Регистрация</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
@@ -32,20 +32,20 @@
                     <label asp-for="Input.Name">Name</label>
                     <span asp-validation-for="Input.Name" class="text-danger"></span>
                 </div>
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Зарегистрироваться</button>
+                <button id="color-button" type="submit" class="w-100 btn btn-lg btn-primary">Зарегистрироваться</button>
             </form>
         </section>
     </div>
     <div class="col-md-5 col-md-offset-2">
         <section>
-            <h3>Регистрации в KOTS Games</h3>
+            <h3>Вход</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            У вас уже есть аккаунт? Тогда воспользуйтесь <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">входом</a>.
+                            У вас уже есть аккаунт? Тогда воспользуйтесь <a id="color-link" asp-page=" . /Login" asp-route-returnUrl="@Model.ReturnUrl">входом</a>.
                         </p>
                     </div>
                 }

@@ -30,29 +30,21 @@
                     </label>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Мяу</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Забыли пароль?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Регистрация</a>
-                    </p>
+                    <button id="color-button" type="submit" class="w-100 btn btn-lg btn-primary">Мяу</button>
                 </div>
             </form>
         </section>
     </div>
     <div class="col-md-5 col-md-offset-2">
         <section>
-            <h3>Добрый день, котятки.</h3>
+            <h3>Регистрация</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            Чаво? Ты ещё не котик? Тогда скорее <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">регистрируйся</a>.
+                            У вас ещё нет учетной записи, можете <a id="color-link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">зарегистрироваться</a> здесь.
                         </p>
                     </div>
                 }
